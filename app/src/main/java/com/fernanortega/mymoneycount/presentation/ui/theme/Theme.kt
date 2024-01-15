@@ -1,4 +1,4 @@
-package com.fernanortega.mymoneycount.ui.theme
+package com.fernanortega.mymoneycount.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -105,7 +105,6 @@ fun MyMoneyCountTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> darkScheme
         else -> lightScheme
     }
