@@ -4,6 +4,8 @@ import com.fernanortega.mymoneycount.domain.repository.AccountRepository
 import com.fernanortega.mymoneycount.domain.repository.RegisterRepository
 import com.fernanortega.mymoneycount.domain.usecases.account.AccountUseCases
 import com.fernanortega.mymoneycount.domain.usecases.account.CreateAccountUseCase
+import com.fernanortega.mymoneycount.domain.usecases.account.CreateAccountValidatorUseCase
+import com.fernanortega.mymoneycount.domain.usecases.account.GetAccountsUseCases
 import com.fernanortega.mymoneycount.domain.usecases.account.ValidateAccountUseCase
 import com.fernanortega.mymoneycount.domain.usecases.register.CreateRegisterUseCase
 import com.fernanortega.mymoneycount.domain.usecases.register.GetRegistersByDateUseCase
@@ -35,6 +37,8 @@ object UseCasesModule {
         accountRepository: AccountRepository
     ): AccountUseCases = AccountUseCases(
         createAccount = CreateAccountUseCase(accountRepository),
-        validateAccountUseCase = ValidateAccountUseCase(accountRepository)
+        validateAccountUseCase = ValidateAccountUseCase(accountRepository),
+        createAccountValidator = CreateAccountValidatorUseCase(accountRepository),
+        getAccounts = GetAccountsUseCases(accountRepository)
     )
 }

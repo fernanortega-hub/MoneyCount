@@ -53,6 +53,7 @@ import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.Crea
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.CreateRegisterEvent.OnChangeRegisterType
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.CreateRegisterEvent.ToggleDatePicker
 import com.fernanortega.mymoneycount.util.CurrencyVisualTransformation
+import com.fernanortega.mymoneycount.util.addErrorChar
 import com.fernanortega.mymoneycount.util.toFormat
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -139,7 +140,7 @@ fun CreateRegisterScreen(
                     isError = descriptionError != null,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.description_label)
+                            text = stringResource(id = R.string.description_label) + addErrorChar(descriptionError)
                         )
                     },
                     supportingText = if (descriptionError != null) {
@@ -163,7 +164,7 @@ fun CreateRegisterScreen(
                     isError = dateError != null,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.date_label)
+                            text = stringResource(id = R.string.date_label) + addErrorChar(dateError)
                         )
                     },
                     supportingText = if (dateError != null) {
@@ -177,12 +178,14 @@ fun CreateRegisterScreen(
 
                 TextField(
                     value = amount,
-                    onValueChange = {
-                        onEvent(
-                            OnChangeAmount(
-                                it, context
+                    onValueChange = { value ->
+                        if(value.all { it.isDigit() }) {
+                            onEvent(
+                                OnChangeAmount(
+                                    value, context
+                                )
                             )
-                        )
+                        }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     isError = amountError != null,
@@ -193,7 +196,7 @@ fun CreateRegisterScreen(
                     },
                     label = {
                         Text(
-                            text = stringResource(id = R.string.amount_label) + if (amountError != null) "*" else ""
+                            text = stringResource(id = R.string.amount_label) + addErrorChar(amountError)
                         )
                     },
                     supportingText = if (amountError != null) {

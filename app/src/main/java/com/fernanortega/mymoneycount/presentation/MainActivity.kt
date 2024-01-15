@@ -3,13 +3,22 @@ package com.fernanortega.mymoneycount.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import com.fernanortega.mymoneycount.presentation.navigation.MyMoneyNavHost
+import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyBottomNavBar
+import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyNavRail
 import com.fernanortega.mymoneycount.presentation.ui.theme.MyMoneyCountTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.toImmutableList
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -22,11 +31,45 @@ class MainActivity : ComponentActivity() {
                 windowSizeClass = windowSizeClass
             )
             MyMoneyCountTheme {
-                MyMoneyNavHost(
+                Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    appState = appState
-                )
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Scaffold(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        bottomBar = {
+                            if(appState.shouldShowBottomBar) {
+                                MyMoneyBottomNavBar(
+                                    destinations = appState.destinations.toImmutableList(),
+                                    onNavigateToDestination = appState::navigateToTopLevelDestination,
+                                    currentDestination = appState.currentDestination
+                                )
+                            }
+                        }
+                    ) { innerPadding ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding)
+                                .consumeWindowInsets(innerPadding)
+                        ) {
+                            if(!appState.shouldShowBottomBar) {
+                                MyMoneyNavRail(
+                                    destinations = appState.destinations.toImmutableList(),
+                                    onNavigateToDestination = appState::navigateToTopLevelDestination,
+                                    currentDestination = appState.currentDestination
+                                )
+                            }
+                            MyMoneyNavHost(
+                                modifier = Modifier
+                                    .weight(1f),
+                                appState = appState
+                            )
+                        }
+                    }
+                }
             }
         }
     }

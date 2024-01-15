@@ -25,4 +25,9 @@
     <string name="create_account_label">Create account</string>
     <string name="cancel_label">Cancel</string>
     <string name="save_label">Save</string>
+    <string name="existing_account_label">Existing account</string>
+    <string name="existing_account_with_same_name_label">Existing account with same name</string>
+    <string name="account_name_label">Nombre de cuenta</string>
+    <string name="use_a_new_name_label">Usa un nombre nuevo para cada cuenta</string>
+    <string name="balance_label">Balance</string>
 </resources>

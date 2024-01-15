@@ -2,10 +2,10 @@ package com.fernanortega.mymoneycount.domain.usecases.account
 
 import com.fernanortega.mymoneycount.domain.model.Account
 import com.fernanortega.mymoneycount.domain.repository.AccountRepository
+import kotlinx.coroutines.flow.Flow
 
-class CreateAccountUseCase(
+class GetAccountsUseCases(
     private val accountRepository: AccountRepository
 ) {
-    suspend operator fun invoke(account: Account) =
-        accountRepository.insertAccount(account)
+    operator fun invoke(): Flow<List<Account>> = accountRepository.getAccounts()
 }

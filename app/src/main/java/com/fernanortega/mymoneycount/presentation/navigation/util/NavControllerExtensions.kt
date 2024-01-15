@@ -1,8 +1,11 @@
 package com.fernanortega.mymoneycount.presentation.navigation.util
 
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import com.fernanortega.mymoneycount.presentation.navigation.Routes
+import com.fernanortega.mymoneycount.presentation.navigation.TopLevelDestination
 
 fun NavHostController.navigateToCurrentRegister(navOptions: NavOptions? = null) {
     this.navigate(Routes.CurrentRegister.route, navOptions)
@@ -29,3 +32,8 @@ fun NavHostController.navigateToRegistersByAccounts(
 ) {
     this.navigate(Routes.RegisterByAccount.createRoute(accountId), navOptions)
 }
+
+fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.name.lowercase(), true) ?: false
+    } ?: this?.parent?.route?.contains(destination.name.lowercase()) ?: false

@@ -14,8 +14,11 @@ import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.Crea
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.CreateRegisterState
 import com.fernanortega.mymoneycount.util.transformLongToDoubleWithDecimals
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -29,6 +32,15 @@ class CreateRegisterViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CreateRegisterState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        accountUseCases
+            .getAccounts()
+            .onEach {
+                _uiState.update { state -> state.copy(availableAccounts = it.toImmutableList()) }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun onEvent(event: CreateRegisterEvent) {
         when (event) {
@@ -109,7 +121,6 @@ class CreateRegisterViewModel @Inject constructor(
                 when (accountResult) {
                     is ValidatorResult.Invalid -> {
                         when (accountResult.invalidResult) {
-                            AccountValidator.EXISTING_ACCOUNT -> Unit
                             AccountValidator.NOT_EXISTING_ACCOUNT -> _uiState.update {
                                 it.copy(
                                     accountError = context.getString(R.string.account_not_exist_label)
@@ -123,6 +134,7 @@ class CreateRegisterViewModel @Inject constructor(
                                     )
                                 )
                             }
+                            else -> Unit
                         }
                         return@launch
                     }

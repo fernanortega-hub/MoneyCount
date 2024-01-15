@@ -9,10 +9,10 @@ import androidx.room.PrimaryKey
     tableName = "register_table"
 )
 data class RegisterEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val registerId: Int,
     val date: Long,
     val amount: Double,
     val description: String,
     @IntRange(from = 1, to = 5) @ColumnInfo("register_type") val registerType: Int,
-    @ColumnInfo("account_id") val accountId: Int
+    @ColumnInfo("account_owned_id") val accountOwnedId: Int
 )

@@ -1,7 +1,6 @@
 package com.fernanortega.mymoneycount.domain.model
 
 import androidx.annotation.IntRange
-import com.fernanortega.mymoneycount.data.database.entities.AccountWithRegisters
 import com.fernanortega.mymoneycount.data.database.entities.RegisterEntity
 
 data class Register(
@@ -13,16 +12,11 @@ data class Register(
     val account: Account
 ) {
     fun toEntity(): RegisterEntity = RegisterEntity(
-        id = id,
+        registerId = id,
         date = date,
         amount = amount,
         description = description,
         registerType = registerType,
-        accountId = account.id,
-    )
-
-    fun toEntityPopulated(): AccountWithRegisters = AccountWithRegisters(
-        registerEntity = toEntity(),
-        accountEntity = account.toEntity()
+        accountOwnedId = account.id,
     )
 }

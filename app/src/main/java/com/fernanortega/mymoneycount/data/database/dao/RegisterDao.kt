@@ -24,22 +24,23 @@ interface RegisterDao {
 
     @Transaction
     @Query(
-        "SELECT *, * FROM register_table " +
-                "JOIN account_table ON account_table.id = account_id WHERE date IN (:start,:end)"
+        "SELECT * FROM register_table " +
+                "INNER JOIN account_table on account_table.accountId == account_owned_id " +
+                "WHERE date >= :start or date <= :end"
     )
     fun getRegistersByDate(start: Long, end: Long): Flow<List<AccountWithRegisters>>
 
     @Transaction
     @Query(
         "SELECT *, * FROM register_table " +
-                "JOIN account_table ON account_table.id = account_id WHERE register_table.id LIKE :id"
+                "INNER JOIN account_table ON account_table.accountId = account_owned_id WHERE register_table.registerId LIKE :id"
     )
     suspend fun getRegisterById(id: Int): AccountWithRegisters?
 
     @Transaction
     @Query(
         "SELECT *, * FROM register_table " +
-                "JOIN account_table ON account_table.id = account_id WHERE account_id LIKE :accountId"
+                "JOIN account_table ON account_table.accountId = account_owned_id WHERE account_owned_id LIKE :accountId"
     )
     fun getRegistersByAccount(accountId: Int): Flow<List<AccountWithRegisters>>
 }

@@ -26,11 +26,11 @@ class AccountRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertAccount(account: Account) {
+    override suspend fun insertAccount(account: Account) =
         withContext(Dispatchers.IO) {
             accountDao.insertAccount(account.toEntity())
         }
-    }
+
 
     override suspend fun updateAccount(account: Account) {
         withContext(Dispatchers.IO) {
@@ -41,4 +41,10 @@ class AccountRepositoryImpl @Inject constructor(
     override suspend fun getAccountById(id: Int): Account? = withContext(Dispatchers.IO) {
             return@withContext accountDao.getAccountById(id)?.toModel()
     }
+
+    override suspend fun getAccountNames(): List<String> =
+        withContext(Dispatchers.IO) {
+            return@withContext accountDao.getAccountNames()
+        }
+
 }

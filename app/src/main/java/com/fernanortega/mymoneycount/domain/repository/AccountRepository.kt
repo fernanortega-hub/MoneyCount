@@ -11,4 +11,6 @@ interface AccountRepository {
     suspend fun updateAccount(account: Account)
 
     suspend fun getAccountById(id: Int): Account?
+
+    suspend fun getAccountNames(): List<String>
 }

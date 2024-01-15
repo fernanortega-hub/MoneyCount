@@ -9,7 +9,7 @@ data class Account(
     val accountName: String
 ) {
     fun toEntity(): AccountEntity = AccountEntity(
-        id = id,
+        accountId = id,
         currentBalance = currentBalance,
         realBalance = realBalance,
         accountName = accountName

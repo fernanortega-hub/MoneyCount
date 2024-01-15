@@ -11,7 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.fernanortega.mymoneycount.presentation.navigation.Routes
 import com.fernanortega.mymoneycount.presentation.navigation.TopLevelDestination
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToAccounts
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToCurrentRegister
@@ -44,14 +43,6 @@ class MyMoneyAppState(
     val destinations = TopLevelDestination.entries
 
     val shouldShowBottomBar = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
-
-    val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when(currentDestination?.route) {
-            Routes.CurrentRegister.route -> TopLevelDestination.CURRENT_REGISTER
-            Routes.Accounts.route -> TopLevelDestination.ACCOUNTS
-            Routes.RegisterSummarize.route -> TopLevelDestination.REGISTER_SUMMARIZE
-            else -> null
-        }
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {

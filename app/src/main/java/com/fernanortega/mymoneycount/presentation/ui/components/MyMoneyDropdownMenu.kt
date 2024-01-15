@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.fernanortega.mymoneycount.util.addErrorChar
 import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,10 +46,10 @@ fun MyMoneyDropdownMenu(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             modifier = Modifier
-                .menuAnchor()
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .menuAnchor(),
             label = {
-                Text(text = label)
+                Text(text = label + addErrorChar(error))
             },
             isError = error != null,
             supportingText = if(error.isNullOrBlank()) null else {

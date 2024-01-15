@@ -28,10 +28,10 @@ fun transformLongToDoubleWithDecimals(intValue: Long?): Double? {
     }
 }
 
-fun transformDoubleToLong(double: Double): Long {
-    val factor = 100  // Factor para conservar dos decimales
-    return (double * factor).toLong()
-}
+//fun transformDoubleToLong(double: Double): Long {
+//    val factor = 100  // Factor para conservar dos decimales
+//    return (double * factor).toLong()
+//}
 
 
 fun Instant.toFormat(formatStyle: FormatStyle = FormatStyle.MEDIUM): String {
@@ -40,4 +40,8 @@ fun Instant.toFormat(formatStyle: FormatStyle = FormatStyle.MEDIUM): String {
         .withLocale(Locale.getDefault())
         .withZone(ZoneId.of("GMT"))
         .format(this.toJavaInstant())
+}
+
+fun addErrorChar(error: String?): String {
+    return if(error.isNullOrBlank()) "" else "*"
 }

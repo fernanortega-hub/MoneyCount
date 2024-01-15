@@ -13,22 +13,22 @@ import com.fernanortega.mymoneycount.R
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
-    val unSelectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
     @StringRes val titleTextId: Int
 ) {
     CURRENT_REGISTER(
         selectedIcon = Icons.Rounded.Summarize,
-        unSelectedIcon = Icons.Outlined.Summarize,
+        unselectedIcon = Icons.Outlined.Summarize,
         titleTextId = R.string.summary_label
     ),
     ACCOUNTS(
         selectedIcon = Icons.Rounded.ManageAccounts,
-        unSelectedIcon = Icons.Outlined.ManageAccounts,
+        unselectedIcon = Icons.Outlined.ManageAccounts,
         titleTextId = R.string.accounts_label
     ),
     REGISTER_SUMMARIZE(
         selectedIcon = Icons.Rounded.CalendarMonth,
-        unSelectedIcon = Icons.Outlined.CalendarMonth,
+        unselectedIcon = Icons.Outlined.CalendarMonth,
         titleTextId = R.string.register_summarize_label
-    )
+    );
 }
