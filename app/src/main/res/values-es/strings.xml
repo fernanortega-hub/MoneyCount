@@ -51,9 +51,11 @@
     <string name="register_type_label">Tipo de registro</string>
     <string name="done_label">Hecho</string>
     <string name="search_icon_content_description">Buscar registros o cuentas</string>
-    <string name="clear_query_label">Clear %1$s query</string>
+    <string name="clear_query_label">Limpiar búsqueda de %1$s</string>
     <string name="register_label">Registros</string>
-    <string name="current_balance_label">Current balance: %1$s</string>
+    <string name="current_balance_label">Saldo actual: %1$s</string>
     <string name="query_not_found_results_label">Lo siento, no encontramos resultados para tu búsqueda \"\%1$s\"</string>
     <string name="not_recent_searches">Sin búsquedas recientes</string>
+    <string name="recent_searches_label">Búsquedas recientes</string>
+    <string name="clear_recent_searches_label">Clear recent searches</string>
 </resources>

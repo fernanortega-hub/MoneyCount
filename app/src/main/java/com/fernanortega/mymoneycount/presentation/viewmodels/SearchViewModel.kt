@@ -34,7 +34,9 @@ class SearchViewModel @Inject constructor(
 
     fun onQueryChange(query: String) {
         viewModelScope.launch {
-            _uiState.update { state -> state.copy(query = query) }
+            val validQuery = query.trim()
+            _uiState.update { state -> state.copy(query = validQuery) }
+            if (validQuery.isBlank() || validQuery.length < 2) return@launch
             delay(250)
             search()
         }
@@ -59,6 +61,7 @@ class SearchViewModel @Inject constructor(
     fun onSearchExplicitly(query: String) {
         viewModelScope.launch {
             searchUseCases.insertUpdateRecentSearchQueryUseCase(query)
+            _uiState.update { state -> state.copy(active = false, query = query.trim()) }
         }
     }
 

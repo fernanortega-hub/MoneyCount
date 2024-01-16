@@ -3,6 +3,7 @@ package com.fernanortega.mymoneycount.presentation.ui.screens.search
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -53,10 +54,20 @@ fun SearchScreen(
     onClickQuery: (String) -> Unit,
     onBack: () -> Unit,
     onNavigateToAccount: (accountId: Int) -> Unit,
-    onActiveChange: (Boolean) -> Unit
+    onActiveChange: (Boolean) -> Unit,
+    clearRecentSearchQueries: () -> Unit
 ) {
     Column(
         modifier = modifier
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = null,
+                onClick = {
+                    onActiveChange(false)
+                }
+            )
     ) {
         Row(
             modifier = Modifier
@@ -102,6 +113,25 @@ fun SearchScreen(
                 }
             ) {
                 if (uiState.recentSearches.isNotEmpty()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.recent_searches_label),
+                            style = MaterialTheme.typography.labelLarge
+                        )
+
+                        IconButton(onClick = clearRecentSearchQueries) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close, 
+                                contentDescription = stringResource(id = R.string.clear_recent_searches_label)
+                            )
+                        }
+                    }
                     uiState.recentSearches.forEach { recentSearch ->
                         ListItem(
                             modifier = Modifier
@@ -156,7 +186,7 @@ fun SearchScreen(
                         key = { "register_${it.id}" }
                     ) { register ->
                         RegisterItem(register = register)
-                        if(uiState.results.registers.size > 1) {
+                        if (uiState.results.registers.size > 1) {
                             HorizontalDivider()
                         }
                     }
@@ -184,7 +214,7 @@ fun SearchScreen(
                                 onNavigateToAccount(account.id)
                             }
                         )
-                        if(uiState.results.accounts.size > 1) {
+                        if (uiState.results.accounts.size > 1) {
                             HorizontalDivider()
                         }
                     }
@@ -251,7 +281,8 @@ fun SearchScreenPreview() {
                 onBack = { },
                 onNavigateToAccount = {},
                 onActiveChange = {},
-                onClickQuery = {}
+                onClickQuery = {},
+                clearRecentSearchQueries = {}
             )
         }
     }

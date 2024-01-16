@@ -25,7 +25,8 @@ fun NavGraphBuilder.searchRoute(
             onNavigateToAccount = onNavigateToAccount,
             onActiveChange = viewModel::onActiveChange,
             onSearchExplicitly = viewModel::onSearchExplicitly,
-            onClickQuery = viewModel::onClickQuery
+            onClickQuery = viewModel::onClickQuery,
+            clearRecentSearchQueries = viewModel::clearRecentSearches
         )
     }
 }

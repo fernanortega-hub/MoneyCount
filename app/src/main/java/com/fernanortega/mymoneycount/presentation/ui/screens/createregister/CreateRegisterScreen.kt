@@ -5,8 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +16,6 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -59,7 +56,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateRegisterScreen(
     modifier: Modifier = Modifier,
@@ -88,7 +85,7 @@ fun CreateRegisterScreen(
     val dateTextFieldIsPressed by dateMutableInteractionSource.collectIsPressedAsState()
 
     LaunchedEffect(dateTextFieldIsPressed) {
-        if(dateTextFieldIsPressed) {
+        if (dateTextFieldIsPressed) {
             onEvent(ToggleDatePicker)
         }
     }
@@ -140,7 +137,9 @@ fun CreateRegisterScreen(
                     isError = descriptionError != null,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.description_label) + addErrorChar(descriptionError)
+                            text = stringResource(id = R.string.description_label) + addErrorChar(
+                                descriptionError
+                            )
                         )
                     },
                     supportingText = if (descriptionError != null) {
@@ -179,7 +178,7 @@ fun CreateRegisterScreen(
                 TextField(
                     value = amount,
                     onValueChange = { value ->
-                        if(value.all { it.isDigit() }) {
+                        if (value.all { it.isDigit() }) {
                             onEvent(
                                 OnChangeAmount(
                                     value, context
@@ -196,7 +195,9 @@ fun CreateRegisterScreen(
                     },
                     label = {
                         Text(
-                            text = stringResource(id = R.string.amount_label) + addErrorChar(amountError)
+                            text = stringResource(id = R.string.amount_label) + addErrorChar(
+                                amountError
+                            )
                         )
                     },
                     supportingText = if (amountError != null) {
@@ -236,34 +237,27 @@ fun CreateRegisterScreen(
                         )
                     }
                 )
-                FlowRow(
+                MyMoneyDropdownMenu(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    maxItemsInEachRow = 3
-
-                ) {
-                    RegisterType.entries.forEach { registerType ->
-                        ElevatedFilterChip(
-                            selected = registerType == uiState.registerType,
-                            onClick = { onEvent(OnChangeRegisterType(registerType)) },
-                            label = {
-                                Text(
-                                    text = stringResource(
-                                        id = when (registerType) {
-                                            RegisterType.EXPENSE -> R.string.expense_label
-                                            RegisterType.INCOME -> R.string.income_label
-                                            RegisterType.SAVING -> R.string.saving_label
-                                            RegisterType.TRANSFER_IN -> R.string.transfer_in_label
-                                            RegisterType.TRANSFER_OUT -> R.string.transfer_out_label
-                                        }
-                                    )
-                                )
+                    options = RegisterType.entries.map {
+                        stringResource(
+                            id = when (it) {
+                                RegisterType.EXPENSE -> R.string.expense_label
+                                RegisterType.INCOME -> R.string.income_label
+                                RegisterType.SAVING -> R.string.saving_label
+                                RegisterType.TRANSFER_IN -> R.string.transfer_in_label
+                                RegisterType.TRANSFER_OUT -> R.string.transfer_out_label
                             }
                         )
-                    }
-                }
+                    }.toImmutableList(),
+                    selectedItem = if (registerType != null) RegisterType.entries.indexOf(registerType) else -1,
+                    onSelectItem = { index ->
+                        onEvent(OnChangeRegisterType(RegisterType.entries[index]))
+                    },
+                    error = registerTypeError,
+                    label = stringResource(id = R.string.register_type_label)
+                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),

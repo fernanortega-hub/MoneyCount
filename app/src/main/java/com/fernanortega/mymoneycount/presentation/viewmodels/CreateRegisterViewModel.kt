@@ -155,7 +155,7 @@ class CreateRegisterViewModel @Inject constructor(
                     context, Register(
                         id = 0,
                         date = _uiState.value.date,
-                        amount = _uiState.value.amount.toDouble(),
+                        amount = transformLongToDoubleWithDecimals(_uiState.value.amount.toLongOrNull()) ?: 0.0,
                         description = _uiState.value.description,
                         registerType = _uiState.value.registerType!!.typeId,
                         account = _uiState.value.selectedAccount!!

@@ -49,10 +49,12 @@
     <string name="sort_by">Sort by</string>
     <string name="register_type_label">Register type</string>
     <string name="done_label">Done</string>
-    <string name="search_icon_content_description">Buscar registros o cuentas</string>
+    <string name="search_icon_content_description">Search registers and accounts</string>
     <string name="clear_query_label">Clear %1$s query</string>
     <string name="register_label">Registers</string>
     <string name="current_balance_label">Current balance: %1$s</string>
     <string name="query_not_found_results_label">Sorry, no results found for your search \"\%1$s\"</string>
     <string name="not_recent_searches">No recent searches</string>
+    <string name="recent_searches_label">Recent searches</string>
+    <string name="clear_recent_searches_label">Clear recent searches</string>
 </resources>
