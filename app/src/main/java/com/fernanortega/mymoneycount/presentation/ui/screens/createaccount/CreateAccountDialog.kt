@@ -46,7 +46,7 @@ fun CreateAccountDialog(
                         MaterialTheme.colorScheme.surfaceContainer,
                         MaterialTheme.shapes.extraLarge
                     )
-                    .padding(16.dp),
+                    .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fernanortega.mymoneycount.domain.usecases.register.RegisterUseCases
 import com.fernanortega.mymoneycount.domain.usecases.register.util.RegisterOrder
-import com.fernanortega.mymoneycount.presentation.ui.screens.currentregister.CurrentRegisterEvent
-import com.fernanortega.mymoneycount.presentation.ui.screens.currentregister.CurrentRegisterUiState
+import com.fernanortega.mymoneycount.presentation.ui.screens.monthlyregister.MonthlyRegisterEvent
+import com.fernanortega.mymoneycount.presentation.ui.screens.monthlyregister.MonthlyRegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
@@ -26,18 +26,18 @@ import javax.inject.Inject
 class CurrentRegisterViewModel @Inject constructor(
     private val registerUseCases: RegisterUseCases
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(CurrentRegisterUiState())
+    private val _uiState = MutableStateFlow(MonthlyRegisterState())
     val uiState = _uiState.asStateFlow()
 
     private var getRegistersJob: Job? = null
 
     init {
-        getNotes(_uiState.value.registerOrder)
+        getRegisters(_uiState.value.registerOrder)
     }
 
-    fun onEvent(event: CurrentRegisterEvent) {
+    fun onEvent(event: MonthlyRegisterEvent) {
         when (event) {
-            is CurrentRegisterEvent.Delete -> {
+            is MonthlyRegisterEvent.Delete -> {
                 viewModelScope.launch {
                     _uiState.update { state -> state.copy(isLoading = true) }
                     delay(400)
@@ -45,18 +45,20 @@ class CurrentRegisterViewModel @Inject constructor(
                 }
             }
 
-            is CurrentRegisterEvent.Order -> {
+            is MonthlyRegisterEvent.Order -> {
                 if (_uiState.value.registerOrder == event.sortBy &&
                     _uiState.value.registerOrder.orderType == event.sortBy.orderType
                 ) {
                     return
                 }
-                getNotes(event.sortBy)
+                getRegisters(event.sortBy)
             }
+
+            is MonthlyRegisterEvent.OnFilterDialogChange -> _uiState.update { state -> state.copy(showFilterDialog = event.show) }
         }
     }
 
-    private fun getNotes(order: RegisterOrder) {
+    private fun getRegisters(order: RegisterOrder) {
         _uiState.update { state -> state.copy(isLoading = true) }
         getRegistersJob?.cancel()
 
@@ -79,7 +81,8 @@ class CurrentRegisterViewModel @Inject constructor(
             .onEach { list ->
                 _uiState.update { state ->
                     state.copy(
-                        registers = list.toImmutableList()
+                        registers = list.toImmutableList(),
+                        registerOrder = order
                     )
                 }
             }

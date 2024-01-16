@@ -3,9 +3,11 @@ package com.fernanortega.mymoneycount.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -13,9 +15,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.fernanortega.mymoneycount.presentation.navigation.MyMoneyNavHost
 import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyBottomNavBar
 import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyNavRail
+import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyTopAppBar
 import com.fernanortega.mymoneycount.presentation.ui.theme.MyMoneyCountTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.collections.immutable.toImmutableList
@@ -62,11 +66,25 @@ class MainActivity : ComponentActivity() {
                                     currentDestination = appState.currentDestination
                                 )
                             }
-                            MyMoneyNavHost(
+                            Column(
                                 modifier = Modifier
-                                    .weight(1f),
-                                appState = appState
-                            )
+                                    .fillMaxSize()
+                            ) {
+                                val destination = appState.currentTopLevelDestination
+                                if(destination != null) {
+                                    MyMoneyTopAppBar(
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        title = stringResource(id = destination.titleTextId),
+                                        onSearchClick = appState::navigateToGlobalSearch
+                                    )
+                                }
+                                MyMoneyNavHost(
+                                    modifier = Modifier
+                                        .weight(1f),
+                                    appState = appState
+                                )
+                            }
                         }
                     }
                 }
@@ -74,3 +92,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

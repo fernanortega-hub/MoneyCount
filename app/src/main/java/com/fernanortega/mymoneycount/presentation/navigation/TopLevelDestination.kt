@@ -16,10 +16,10 @@ enum class TopLevelDestination(
     val unselectedIcon: ImageVector,
     @StringRes val titleTextId: Int
 ) {
-    CURRENT_REGISTER(
+    MONTHLY_SUMMARIZE(
         selectedIcon = Icons.Rounded.Summarize,
         unselectedIcon = Icons.Outlined.Summarize,
-        titleTextId = R.string.summary_label
+        titleTextId = R.string.monthly_summary_label
     ),
     ACCOUNTS(
         selectedIcon = Icons.Rounded.ManageAccounts,

@@ -8,19 +8,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.dialog
 import com.fernanortega.mymoneycount.presentation.navigation.Routes
 import com.fernanortega.mymoneycount.presentation.viewmodels.CreateAccountViewModel
 
-fun NavGraphBuilder.createAccountRoute(navController: NavHostController) {
+fun NavGraphBuilder.createAccountRoute(
+    goBack: () -> Unit
+) {
     dialog(route = Routes.CreateAccount.route) {
         val viewModel: CreateAccountViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         LaunchedEffect(uiState.isCreated) {
             if(uiState.isCreated) {
-                navController.popBackStack()
+                goBack()
             }
         }
         CreateAccountDialog(
@@ -28,7 +29,7 @@ fun NavGraphBuilder.createAccountRoute(navController: NavHostController) {
                 .widthIn(max = 450.dp),
             uiState = uiState,
             onEvent = viewModel::onEvent,
-            onDismiss = navController::popBackStack
+            onDismiss = goBack
         )
     }
 }

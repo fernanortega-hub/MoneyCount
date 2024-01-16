@@ -8,7 +8,7 @@ import com.fernanortega.mymoneycount.presentation.navigation.Routes
 import com.fernanortega.mymoneycount.presentation.navigation.TopLevelDestination
 
 fun NavHostController.navigateToCurrentRegister(navOptions: NavOptions? = null) {
-    this.navigate(Routes.CurrentRegister.route, navOptions)
+    this.navigate(Routes.MonthlySummarize.route, navOptions)
 }
 
 fun NavHostController.navigateToCreateRegister(navOptions: NavOptions? = null) {

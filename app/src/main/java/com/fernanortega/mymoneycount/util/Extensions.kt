@@ -3,6 +3,7 @@ package com.fernanortega.mymoneycount.util
 import com.fernanortega.mymoneycount.domain.util.RegisterType
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
+import java.text.NumberFormat
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -44,4 +45,15 @@ fun Instant.toFormat(formatStyle: FormatStyle = FormatStyle.MEDIUM): String {
 
 fun addErrorChar(error: String?): String {
     return if(error.isNullOrBlank()) "" else "*"
+}
+
+fun Double.toCurrency(): String {
+    return NumberFormat.getCurrencyInstance().apply {
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
+    }.format(this)
+}
+
+fun Long.toInstant(): Instant {
+    return Instant.fromEpochMilliseconds(this)
 }

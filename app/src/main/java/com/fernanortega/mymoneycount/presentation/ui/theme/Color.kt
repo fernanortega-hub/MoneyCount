@@ -217,3 +217,15 @@ val surfaceContainerHighestDark = Color(0xFF32353A)
 //val surfaceContainerDarkHighContrast = Color(0xFF1D2024)
 //val surfaceContainerHighDarkHighContrast = Color(0xFF272A2F)
 //val surfaceContainerHighestDarkHighContrast = Color(0xFF32353A)
+
+val incomeContainerColor = Color(0xFF33836D)
+val expenseContainerColor = Color(0xFFAC3737)
+val savingContainerColor = Color(0xFFAAF355)
+val transferInContainerColor = Color(0xFF673AB7)
+val transferOutContainerColor = Color(0xFFE7B316)
+
+val incomeContentColor = Color.White
+val expenseContentColor = Color.White
+val savingContentColor = Color.Black
+val transferInContentColor = Color.White
+val transferOutContentColor = Color.Black

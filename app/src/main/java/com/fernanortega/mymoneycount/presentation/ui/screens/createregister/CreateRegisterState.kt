@@ -22,5 +22,6 @@ data class CreateRegisterState(
     val registerTypeError: String? = null,
     val amountError: String? = null,
     val toast: String? = null,
-    val showDatePicker: Boolean = false
+    val showDatePicker: Boolean = false,
+    val isCreated: Boolean = false
 )

@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.fernanortega.mymoneycount.presentation.navigation.Routes
 import com.fernanortega.mymoneycount.presentation.navigation.TopLevelDestination
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToAccounts
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToCurrentRegister
@@ -42,6 +43,14 @@ class MyMoneyAppState(
 
     val destinations = TopLevelDestination.entries
 
+    val currentTopLevelDestination: TopLevelDestination?
+        @Composable get() = when (currentDestination?.route) {
+            Routes.MonthlySummarize.route -> TopLevelDestination.MONTHLY_SUMMARIZE
+            Routes.Accounts.route -> TopLevelDestination.ACCOUNTS
+            Routes.RegisterSummarize.route -> TopLevelDestination.REGISTER_SUMMARIZE
+            else -> null
+        }
+
     val shouldShowBottomBar = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
@@ -53,9 +62,15 @@ class MyMoneyAppState(
             restoreState = true
         }
         when (topLevelDestination) {
-            TopLevelDestination.CURRENT_REGISTER -> navController.navigateToCurrentRegister(topLevelNavOptions)
+            TopLevelDestination.MONTHLY_SUMMARIZE -> navController.navigateToCurrentRegister(topLevelNavOptions)
             TopLevelDestination.ACCOUNTS -> navController.navigateToAccounts(topLevelNavOptions)
             TopLevelDestination.REGISTER_SUMMARIZE -> navController.navigateToRegisterSummarize(topLevelNavOptions)
         }
     }
+
+    fun navigateToGlobalSearch() = navController.navigateToSearch()
+}
+
+private fun NavHostController.navigateToSearch() {
+    this.navigate(Routes.Search.route)
 }

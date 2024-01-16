@@ -163,6 +163,7 @@ class CreateRegisterViewModel @Inject constructor(
                 ) ?: return@launch
 
                 registerUseCases.createRegister(validRegister)
+                _uiState.update { state -> state.copy(isCreated = true) }
             } catch (e: Exception) {
                 _uiState.update { state ->
                     state.copy(
