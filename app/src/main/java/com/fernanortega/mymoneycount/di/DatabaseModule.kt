@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.fernanortega.mymoneycount.data.database.MyMoneyCountDatabase
 import com.fernanortega.mymoneycount.data.database.dao.AccountDao
+import com.fernanortega.mymoneycount.data.database.dao.RecentSearchQueryDao
 import com.fernanortega.mymoneycount.data.database.dao.RegisterDao
 import dagger.Module
 import dagger.Provides
@@ -36,4 +37,10 @@ object DatabaseModule {
     fun providesRegisterDao(
         database: MyMoneyCountDatabase
     ): RegisterDao = database.registerDao()
+
+    @Provides
+    @Singleton
+    fun providesRecentSearchQueryDao(
+        database: MyMoneyCountDatabase
+    ): RecentSearchQueryDao = database.recentSearchQueryDao()
 }

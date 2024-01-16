@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,7 +32,6 @@ import com.fernanortega.mymoneycount.presentation.ui.theme.transferOutContainerC
 import com.fernanortega.mymoneycount.presentation.ui.theme.transferOutContentColor
 import com.fernanortega.mymoneycount.util.toCurrency
 import com.fernanortega.mymoneycount.util.toFormat
-import com.fernanortega.mymoneycount.util.toInstant
 import com.fernanortega.mymoneycount.util.toRegisterType
 import kotlinx.datetime.Clock
 
@@ -97,7 +95,7 @@ fun RegisterItem(
                     )
                 }
                 Text(
-                    text = register.date.toInstant().toFormat()
+                    text = register.date.toFormat()
                 )
             }
         },
@@ -107,7 +105,6 @@ fun RegisterItem(
             )
         }
     )
-    HorizontalDivider()
 }
 
 @Preview
@@ -117,7 +114,7 @@ fun RegisterItemPreview() {
         Surface {
             RegisterItem(register = Register(
                 id = 9808,
-                date = Clock.System.now().toEpochMilliseconds(),
+                date = Clock.System.now(),
                 amount = 14.15,
                 description = "tristique",
                 registerType = 2,

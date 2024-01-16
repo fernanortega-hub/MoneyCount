@@ -154,7 +154,7 @@ class CreateRegisterViewModel @Inject constructor(
                 val validRegister = validateRegister(
                     context, Register(
                         id = 0,
-                        date = _uiState.value.date.toEpochMilliseconds(),
+                        date = _uiState.value.date,
                         amount = _uiState.value.amount.toDouble(),
                         description = _uiState.value.description,
                         registerType = _uiState.value.registerType!!.typeId,

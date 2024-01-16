@@ -27,6 +27,10 @@ interface AccountDao {
     @Update
     suspend fun updateAccount(account: AccountEntity)
 
-    @Query("SELECT * FROM account_table WHERE accountId = :id")
+    @Query("SELECT * FROM account_table WHERE account_id = :id")
     suspend fun getAccountById(id: Int): AccountEntity?
+
+    @Query("SELECT * FROM account_table WHERE account_name LIKE :query")
+    fun searchAccounts(query: String): Flow<List<AccountEntity>>
+
 }

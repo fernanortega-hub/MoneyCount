@@ -7,7 +7,9 @@ import com.fernanortega.mymoneycount.domain.model.Account
 
 @Entity(tableName = "account_table")
 data class AccountEntity(
-    @PrimaryKey(autoGenerate = true) val accountId: Int,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo("account_id")
+    val accountId: Int,
     @ColumnInfo("current_balance") val currentBalance: Double,
     @ColumnInfo("real_balance") val realBalance: Double,
     @ColumnInfo("account_name") val accountName: String

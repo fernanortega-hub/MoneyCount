@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.FilterList
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -117,6 +118,7 @@ fun MonthlyRegisterScreen(
                     contentType = { it.id },
                 ) { register ->
                     RegisterItem(register)
+                    HorizontalDivider()
                 }
             }
         }

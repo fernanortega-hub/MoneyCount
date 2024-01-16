@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.fernanortega.mymoneycount.presentation.MyMoneyAppState
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToCreateAccount
 import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToCreateRegister
+import com.fernanortega.mymoneycount.presentation.navigation.util.navigateToRegistersByAccounts
 import com.fernanortega.mymoneycount.presentation.ui.screens.account.accountsRoute
 import com.fernanortega.mymoneycount.presentation.ui.screens.createaccount.createAccountRoute
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.createRegisterRoute
@@ -34,7 +35,8 @@ fun MyMoneyNavHost(
         )
         createAccountRoute(goBack = navController::popBackStack)
         searchRoute(
-            goBack = navController::popBackStack
+            goBack = navController::popBackStack,
+            onNavigateToAccount = navController::navigateToRegistersByAccounts,
         )
         accountsRoute()
         registerSummarize()

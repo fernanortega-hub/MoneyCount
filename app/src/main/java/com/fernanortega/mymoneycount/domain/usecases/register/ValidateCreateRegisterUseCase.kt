@@ -5,7 +5,6 @@ import com.fernanortega.mymoneycount.domain.repository.AccountRepository
 import com.fernanortega.mymoneycount.domain.usecases.register.util.CreateRegisterValidator
 import com.fernanortega.mymoneycount.domain.util.ValidatorResult
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 
 class ValidateCreateRegisterUseCase(
     private val accountRepository: AccountRepository
@@ -22,9 +21,7 @@ class ValidateCreateRegisterUseCase(
             return ValidatorResult.Invalid(CreateRegisterValidator.INVALID_DESCRIPTION)
         }
 
-        val instant = Instant.fromEpochMilliseconds(register.date)
-
-        if(register.date == 0L || instant > Clock.System.now()) {
+        if(register.date > Clock.System.now()) {
             return ValidatorResult.Invalid(CreateRegisterValidator.INVALID_DATE)
         }
 
