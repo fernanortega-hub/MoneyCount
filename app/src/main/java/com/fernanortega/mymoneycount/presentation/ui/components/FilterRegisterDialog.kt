@@ -68,7 +68,9 @@ fun FilterRegisterDialog(
             ) {
                 Text(
                     text = stringResource(id = R.string.order_label),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
                 FlowRow(
                     modifier = Modifier
@@ -112,7 +114,9 @@ fun FilterRegisterDialog(
                 }
                 Text(
                     text = stringResource(id = R.string.sort_by),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
                 FlowRow(
                     modifier = Modifier
