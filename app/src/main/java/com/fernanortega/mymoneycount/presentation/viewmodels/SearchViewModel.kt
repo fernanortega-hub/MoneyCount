@@ -34,9 +34,8 @@ class SearchViewModel @Inject constructor(
 
     fun onQueryChange(query: String) {
         viewModelScope.launch {
-            val validQuery = query.trim()
-            _uiState.update { state -> state.copy(query = validQuery) }
-            if (validQuery.isBlank() || validQuery.length < 2) return@launch
+            _uiState.update { state -> state.copy(query = query) }
+            if (query.trim().isBlank() || query.trim().length < 2) return@launch
             delay(250)
             search()
         }

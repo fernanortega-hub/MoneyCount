@@ -80,7 +80,7 @@ class CreateAccountViewModel @Inject constructor(
     private fun onChangeRealBalance(balance: String) {
         val formattedPrice = if (balance.startsWith("0")) "" else balance
         val isValidPrice =
-            transformLongToDoubleWithDecimals(formattedPrice.ifBlank { "0" }.toLongOrNull())
+            formattedPrice.ifBlank { "0" }.toLongOrNull().transformLongToDoubleWithDecimals()
 
         if (isValidPrice != null) {
             _uiState.update { state ->
@@ -99,8 +99,7 @@ class CreateAccountViewModel @Inject constructor(
 
         createAccountJob = viewModelScope.launch {
             val balance =
-                transformLongToDoubleWithDecimals(_uiState.value.currentBalance.ifBlank { "0" }
-                    .toLongOrNull()) ?: 0.0
+                _uiState.value.currentBalance.ifBlank { "0" }.toLongOrNull().transformLongToDoubleWithDecimals() ?: 0.0
             val account = Account(
                 id = 0,
                 currentBalance = balance,

@@ -55,7 +55,7 @@ class CreateRegisterViewModel @Inject constructor(
             is CreateRegisterEvent.OnChangeAmount -> {
                 val formattedPrice = if (event.amount.startsWith("0")) "" else event.amount
                 val isValidPrice =
-                    transformLongToDoubleWithDecimals(formattedPrice.ifBlank { "0" }.toLongOrNull())
+                    formattedPrice.ifBlank { "0" }.toLongOrNull().transformLongToDoubleWithDecimals()
 
                 if (isValidPrice != null) {
                     _uiState.update { state ->
@@ -155,7 +155,7 @@ class CreateRegisterViewModel @Inject constructor(
                     context, Register(
                         id = 0,
                         date = _uiState.value.date,
-                        amount = transformLongToDoubleWithDecimals(_uiState.value.amount.toLongOrNull()) ?: 0.0,
+                        amount = _uiState.value.amount.toLongOrNull().transformLongToDoubleWithDecimals() ?: 0.0,
                         description = _uiState.value.description,
                         registerType = _uiState.value.registerType!!.typeId,
                         account = _uiState.value.selectedAccount!!
