@@ -49,7 +49,7 @@ fun MyMoneyDropdownMenu(
                 .fillMaxWidth()
                 .menuAnchor(),
             label = {
-                Text(text = label + addErrorChar(error))
+                Text(text = label + error.addErrorChar())
             },
             isError = error != null,
             supportingText = if(error.isNullOrBlank()) null else {

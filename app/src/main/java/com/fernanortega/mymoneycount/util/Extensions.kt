@@ -38,8 +38,8 @@ fun Instant.toFormat(formatStyle: FormatStyle = FormatStyle.MEDIUM): String {
         .format(this.toJavaInstant())
 }
 
-fun addErrorChar(error: String?): String {
-    return if(error.isNullOrBlank()) "" else "*"
+fun String?.addErrorChar(): String {
+    return if(this.isNullOrBlank()) "" else "*"
 }
 
 fun Double.toCurrency(): String {

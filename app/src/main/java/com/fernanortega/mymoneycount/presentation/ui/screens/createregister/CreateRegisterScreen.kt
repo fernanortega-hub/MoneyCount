@@ -142,9 +142,7 @@ fun CreateRegisterScreen(
                     isError = descriptionError != null,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.description_label) + addErrorChar(
-                                descriptionError
-                            )
+                            text = stringResource(id = R.string.description_label) + descriptionError.addErrorChar()
                         )
                     },
                     supportingText = if (descriptionError != null) {
@@ -168,7 +166,7 @@ fun CreateRegisterScreen(
                     isError = dateError != null,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.date_label) + addErrorChar(dateError)
+                            text = stringResource(id = R.string.date_label) + dateError.addErrorChar()
                         )
                     },
                     supportingText = if (dateError != null) {
@@ -200,9 +198,7 @@ fun CreateRegisterScreen(
                     },
                     label = {
                         Text(
-                            text = stringResource(id = R.string.amount_label) + addErrorChar(
-                                amountError
-                            )
+                            text = stringResource(id = R.string.amount_label) + amountError.addErrorChar()
                         )
                     },
                     supportingText = if (amountError != null) {
