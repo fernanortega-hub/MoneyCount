@@ -29,7 +29,7 @@
     <string name="existing_account_with_same_name_label">Existe una cuenta con el mismo nombre</string>
     <string name="account_name_label">Nombre de cuenta</string>
     <string name="use_a_new_name_label">Usa un nombre nuevo para cada cuenta</string>
-    <string name="balance_label">Balance</string>
+    <string name="balance_label">Saldo</string>
     <string name="monthly_registers_label">Registros de %s</string>
     <string name="january_label">Enero</string>
     <string name="february_label">Febrero</string>
@@ -43,11 +43,11 @@
     <string name="october_label">Octubre</string>
     <string name="november_label">Noviembre</string>
     <string name="december_label">Diciembre</string>
-    <string name="filter_label">Filtrar</string>
-    <string name="order_label">Order</string>
+    <string name="filter_registers_label">Filtrar registros</string>
+    <string name="order_label">Orden</string>
     <string name="ascending_label">Ascendente</string>
     <string name="descending_label">Descendiente</string>
-    <string name="sort_by">Ordenar por</string>
+    <string name="sort_registers_by">Ordenar registros por</string>
     <string name="register_type_label">Tipo de registro</string>
     <string name="done_label">Hecho</string>
     <string name="search_icon_content_description">Buscar registros o cuentas</string>
@@ -57,5 +57,7 @@
     <string name="query_not_found_results_label">Lo siento, no encontramos resultados para tu búsqueda \"\%1$s\"</string>
     <string name="not_recent_searches">Sin búsquedas recientes</string>
     <string name="recent_searches_label">Búsquedas recientes</string>
-    <string name="clear_recent_searches_label">Clear recent searches</string>
+    <string name="clear_recent_searches_label">Limpiar búsquedas recientes</string>
+    <string name="date_range_label">Rango de fechas</string>
+    <string name="close_date_range">Cerrar seleccionador de rango de fechas</string>
 </resources>

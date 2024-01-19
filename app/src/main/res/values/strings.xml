@@ -42,11 +42,11 @@
     <string name="october_label">October</string>
     <string name="november_label">November</string>
     <string name="december_label">December</string>
-    <string name="filter_label">Filter</string>
+    <string name="filter_registers_label">Filter registers</string>
     <string name="order_label">Order</string>
     <string name="ascending_label">Ascending</string>
     <string name="descending_label">Descending</string>
-    <string name="sort_by">Sort by</string>
+    <string name="sort_registers_by">Sort registers by</string>
     <string name="register_type_label">Register type</string>
     <string name="done_label">Done</string>
     <string name="search_icon_content_description">Search registers and accounts</string>
@@ -57,4 +57,6 @@
     <string name="not_recent_searches">No recent searches</string>
     <string name="recent_searches_label">Recent searches</string>
     <string name="clear_recent_searches_label">Clear recent searches</string>
+    <string name="date_range_label">Rango de fechas</string>
+    <string name="close_date_range">Cerrar seleccionador de rango de fechas</string>
 </resources>

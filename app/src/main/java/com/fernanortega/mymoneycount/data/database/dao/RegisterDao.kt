@@ -10,6 +10,7 @@ import androidx.room.Update
 import com.fernanortega.mymoneycount.data.database.entities.AccountWithRegisters
 import com.fernanortega.mymoneycount.data.database.entities.RegisterEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 @Dao
 interface RegisterDao {
@@ -25,10 +26,10 @@ interface RegisterDao {
     @Transaction
     @Query(
         "SELECT * FROM register_table " +
-                "INNER JOIN account_table on account_table.account_id == account_owned_id " +
-                "WHERE date >= :start or date <= :end"
+                "INNER JOIN account_table ON account_table.account_id == account_owned_id " +
+                "WHERE date BETWEEN :start AND :end"
     )
-    fun getRegistersByDate(start: Long, end: Long): Flow<List<AccountWithRegisters>>
+    fun getRegistersByDate(start: Instant, end: Instant): Flow<List<AccountWithRegisters>>
 
     @Transaction
     @Query(

@@ -48,3 +48,7 @@ fun Double.toCurrency(): String {
         maximumFractionDigits = 2
     }.format(this)
 }
+
+fun Long.toInstant(): Instant {
+    return Instant.fromEpochMilliseconds(this)
+}

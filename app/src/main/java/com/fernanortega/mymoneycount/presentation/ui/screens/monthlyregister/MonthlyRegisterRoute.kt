@@ -8,13 +8,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.fernanortega.mymoneycount.presentation.navigation.Routes
-import com.fernanortega.mymoneycount.presentation.viewmodels.CurrentRegisterViewModel
+import com.fernanortega.mymoneycount.presentation.viewmodels.MonthlyRegisterViewModel
 
 fun NavGraphBuilder.monthlyRegisterRoute(onNavigateToCreateRegister: () -> Unit) {
     composable(
         route = Routes.MonthlySummarize.route
     ) {
-        val viewModel: CurrentRegisterViewModel = hiltViewModel()
+        val viewModel: MonthlyRegisterViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         MonthlyRegisterScreen(

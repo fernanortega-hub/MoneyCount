@@ -3,10 +3,10 @@ package com.fernanortega.mymoneycount.presentation.navigation
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material.icons.outlined.ManageAccounts
+import androidx.compose.material.icons.outlined.Money
 import androidx.compose.material.icons.outlined.Summarize
 import androidx.compose.material.icons.rounded.CalendarMonth
-import androidx.compose.material.icons.rounded.ManageAccounts
+import androidx.compose.material.icons.rounded.Money
 import androidx.compose.material.icons.rounded.Summarize
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.fernanortega.mymoneycount.R
@@ -22,8 +22,8 @@ enum class TopLevelDestination(
         titleTextId = R.string.monthly_summary_label
     ),
     ACCOUNTS(
-        selectedIcon = Icons.Rounded.ManageAccounts,
-        unselectedIcon = Icons.Outlined.ManageAccounts,
+        selectedIcon = Icons.Rounded.Money,
+        unselectedIcon = Icons.Outlined.Money,
         titleTextId = R.string.accounts_label
     ),
     REGISTER_SUMMARIZE(

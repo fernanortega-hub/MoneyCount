@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
@@ -21,7 +22,7 @@ class RegisterRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getRegistersByDate(start: Long, end: Long): Flow<List<Register>> {
+    override fun getRegistersByDate(start: Instant, end: Instant): Flow<List<Register>> {
         return registerDao.getRegistersByDate(start, end).map { list ->
             list.map { registerAndAccount ->
                 registerAndAccount.toModel()

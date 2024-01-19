@@ -23,7 +23,7 @@ import java.time.YearMonth
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrentRegisterViewModel @Inject constructor(
+class MonthlyRegisterViewModel @Inject constructor(
     private val registerUseCases: RegisterUseCases
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MonthlyRegisterState())
@@ -61,17 +61,15 @@ class CurrentRegisterViewModel @Inject constructor(
     private fun getRegisters(order: RegisterOrder) {
         _uiState.update { state -> state.copy(isLoading = true) }
         getRegistersJob?.cancel()
-
-        val timeZone = TimeZone.currentSystemDefault()
+        val timeZone = TimeZone.UTC
         val yearMonth = YearMonth.now()
-
         val startDate =
-            yearMonth.atDay(1).atStartOfDay().toKotlinLocalDateTime().toInstant(timeZone)
-                .toEpochMilliseconds()
+            yearMonth.atDay(1)
+                .atStartOfDay()
+                .toKotlinLocalDateTime()
+                .toInstant(timeZone)
         val endDate =
             yearMonth.atEndOfMonth().atTime(23, 59).toKotlinLocalDateTime().toInstant(timeZone)
-                .toEpochMilliseconds()
-
 
         registerUseCases.getRegisters(
             start = startDate,

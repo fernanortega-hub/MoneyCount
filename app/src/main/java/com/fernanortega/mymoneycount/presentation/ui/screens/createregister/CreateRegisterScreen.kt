@@ -1,8 +1,5 @@
 package com.fernanortega.mymoneycount.presentation.ui.screens.createregister
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +23,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -38,10 +32,10 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.fernanortega.mymoneycount.R
 import com.fernanortega.mymoneycount.domain.util.RegisterType
 import com.fernanortega.mymoneycount.presentation.ui.components.DatePickerDialog
+import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyClickableTextField
 import com.fernanortega.mymoneycount.presentation.ui.components.MyMoneyDropdownMenu
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.CreateRegisterEvent.CreateRegister
 import com.fernanortega.mymoneycount.presentation.ui.screens.createregister.CreateRegisterEvent.OnChangeAccount
@@ -78,18 +72,6 @@ fun CreateRegisterScreen(
         },
         startDate = uiState.date.toEpochMilliseconds()
     )
-
-    val dateMutableInteractionSource = remember {
-        MutableInteractionSource()
-    }
-
-    val dateTextFieldIsPressed by dateMutableInteractionSource.collectIsPressedAsState()
-
-    LaunchedEffect(dateTextFieldIsPressed) {
-        if (dateTextFieldIsPressed) {
-            onEvent(ToggleDatePicker)
-        }
-    }
 
     Scaffold(
         modifier = modifier
@@ -153,29 +135,15 @@ fun CreateRegisterScreen(
                     singleLine = true
                 )
 
-                TextField(
+                MyMoneyClickableTextField(
                     value = date.toFormat(),
-                    onValueChange = { },
-                    readOnly = true,
+                    error = dateError,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            onEvent(ToggleDatePicker)
-                        }
-                        .zIndex(0f),
-                    isError = dateError != null,
-                    label = {
-                        Text(
-                            text = stringResource(id = R.string.date_label) + dateError.addErrorChar()
-                        )
-                    },
-                    supportingText = if (dateError != null) {
-                        {
-                            Text(text = dateError)
-                        }
-                    } else null,
-                    singleLine = true,
-                    interactionSource = dateMutableInteractionSource
+                        .fillMaxWidth(),
+                    label = stringResource(id = R.string.date_label),
+                    onClick = {
+                        onEvent(ToggleDatePicker)
+                    }
                 )
 
                 TextField(

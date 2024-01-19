@@ -6,13 +6,14 @@ import com.fernanortega.mymoneycount.domain.usecases.register.util.RegisterOrder
 import com.fernanortega.mymoneycount.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 
 class GetRegistersByDateUseCase(
     private val registerRepository: RegisterRepository
 ) {
     operator fun invoke(
-        start: Long,
-        end: Long,
+        start: Instant,
+        end: Instant,
         registerOrder: RegisterOrder = RegisterOrder.Date(OrderType.DESCENDING)
     ): Flow<List<Register>> {
         return registerRepository.getRegistersByDate(start, end).map { list ->

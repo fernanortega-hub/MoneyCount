@@ -13,7 +13,12 @@ sealed class Routes(val route: String) {
     data object CreateAccount: Routes("create_account")
     data object Search: Routes("search")
 
+    data object EditRegister: Routes("edit_register/{$REGISTER_ID_KEY}"){
+        fun createRoute(id: Int) = "edit_register/$id"
+    }
+
     companion object {
         const val ACCOUNT_ID_KEY = "account_id"
+        const val REGISTER_ID_KEY = "register_id"
     }
 }

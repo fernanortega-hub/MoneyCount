@@ -3,41 +3,26 @@ package com.fernanortega.mymoneycount.presentation.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.ArrowDownward
-import androidx.compose.material.icons.rounded.ArrowUpward
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.DateRange
-import androidx.compose.material.icons.rounded.Money
-import androidx.compose.material.icons.rounded.Summarize
 import androidx.compose.material3.Button
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.fernanortega.mymoneycount.R
 import com.fernanortega.mymoneycount.domain.usecases.register.util.RegisterOrder
 import com.fernanortega.mymoneycount.util.OrderType
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FilterRegisterDialog(
     modifier: Modifier = Modifier,
@@ -46,17 +31,12 @@ fun FilterRegisterDialog(
     onChangeSortBy: (RegisterOrder) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
     if (show) {
         Dialog(
-            onDismissRequest = onDismiss,
-            properties = DialogProperties(usePlatformDefaultWidth = false)
+            onDismissRequest = onDismiss
         ) {
             Column(
                 modifier = modifier
-                    .widthIn(
-                        max = configuration.screenWidthDp.dp / 1.4f
-                    )
                     .verticalScroll(rememberScrollState())
                     .background(
                         MaterialTheme.colorScheme.surfaceContainer,
@@ -72,137 +52,71 @@ fun FilterRegisterDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-                FlowRow(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    maxItemsInEachRow = 100
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     OrderType.entries.forEach { orderType ->
-                        val (icon, label) = when (orderType) {
-                            OrderType.ASCENDING -> Pair(
-                                Icons.Rounded.ArrowUpward,
-                                stringResource(id = R.string.ascending_label)
-                            )
-
-                            OrderType.DESCENDING -> Pair(
-                                Icons.Rounded.ArrowDownward,
-                                stringResource(id = R.string.descending_label)
-                            )
+                        val label = when (orderType) {
+                            OrderType.ASCENDING -> stringResource(id = R.string.ascending_label)
+                            OrderType.DESCENDING -> stringResource(id = R.string.descending_label)
                         }
                         val selected = orderType == selectedSortBy.orderType
-                        FilterChip(
+                        MyMoneyRadioButton(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            label = label,
                             selected = selected,
-                            onClick = { onChangeSortBy(selectedSortBy.changeOrderType(orderType)) },
-                            label = {
-                                Text(text = label)
-                            },
-                            leadingIcon = if (selected) {
-                                {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Check,
-                                        contentDescription = null
-                                    )
-                                }
-                            } else null,
-                            trailingIcon = {
-                                Icon(imageVector = icon, contentDescription = null)
-                            }
+                            onClick = { onChangeSortBy(selectedSortBy.changeOrderType(orderType)) }
                         )
                     }
                 }
                 Text(
-                    text = stringResource(id = R.string.sort_by),
+                    text = stringResource(id = R.string.sort_registers_by),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-                FlowRow(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    maxItemsInEachRow = 3
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val accountNameIsSelected = selectedSortBy is RegisterOrder.AccountName
-                    FilterChip(
-                        selected = accountNameIsSelected,
-                        onClick = { onChangeSortBy(RegisterOrder.AccountName(selectedSortBy.orderType)) },
-                        label = {
-                            Text(text = stringResource(id = R.string.account_name_label))
-                        },
-                        leadingIcon = if (accountNameIsSelected) {
-                            {
-                                Icon(
-                                    imageVector = Icons.Rounded.Check,
-                                    contentDescription = null
-                                )
-                            }
-                        } else null,
-                        trailingIcon = {
-                            Icon(imageVector = Icons.Rounded.AccountBox, contentDescription = null)
-                        }
-                    )
-
                     val dateIsSelected = selectedSortBy is RegisterOrder.Date
-                    FilterChip(
+                    MyMoneyRadioButton(
                         selected = dateIsSelected,
                         onClick = { onChangeSortBy(RegisterOrder.Date(selectedSortBy.orderType)) },
-                        label = {
-                            Text(text = stringResource(id = R.string.date_label))
-                        },
-                        leadingIcon = if (dateIsSelected) {
-                            {
-                                Icon(
-                                    imageVector = Icons.Rounded.Check,
-                                    contentDescription = null
-                                )
-                            }
-                        } else null,
-                        trailingIcon = {
-                            Icon(imageVector = Icons.Rounded.DateRange, contentDescription = null)
-                        }
+                        label = stringResource(id = R.string.date_label),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+
+                    val accountNameIsSelected = selectedSortBy is RegisterOrder.AccountName
+                    MyMoneyRadioButton(
+                        selected = accountNameIsSelected,
+                        onClick = { onChangeSortBy(RegisterOrder.AccountName(selectedSortBy.orderType)) },
+                        label = stringResource(id = R.string.account_name_label),
+                        modifier = Modifier
+                            .fillMaxWidth()
                     )
 
                     val registerTypeIsSelected = selectedSortBy is RegisterOrder.RegisterType
-                    FilterChip(
+                    MyMoneyRadioButton(
                         selected = registerTypeIsSelected,
                         onClick = { onChangeSortBy(RegisterOrder.RegisterType(selectedSortBy.orderType)) },
-                        label = {
-                            Text(text = stringResource(id = R.string.register_type_label))
-                        },
-                        leadingIcon = if (registerTypeIsSelected) {
-                            {
-                                Icon(
-                                    imageVector = Icons.Rounded.Check,
-                                    contentDescription = null
-                                )
-                            }
-                        } else null,
-                        trailingIcon = {
-                            Icon(imageVector = Icons.Rounded.Summarize, contentDescription = null)
-                        }
+                        label = stringResource(id = R.string.register_type_label),
+                        modifier = Modifier
+                            .fillMaxWidth()
                     )
 
                     val amountIsSelected = selectedSortBy is RegisterOrder.Amount
-                    FilterChip(
+                    MyMoneyRadioButton(
                         selected = amountIsSelected,
                         onClick = { onChangeSortBy(RegisterOrder.Amount(selectedSortBy.orderType)) },
-                        label = {
-                            Text(text = stringResource(id = R.string.amount_label))
-                        },
-                        leadingIcon = if (amountIsSelected) {
-                            {
-                                Icon(
-                                    imageVector = Icons.Rounded.Check,
-                                    contentDescription = null
-                                )
-                            }
-                        } else null,
-                        trailingIcon = {
-                            Icon(imageVector = Icons.Rounded.Money, contentDescription = null)
-                        }
+                        label = stringResource(id = R.string.amount_label),
+                        modifier = Modifier
+                            .fillMaxWidth()
                     )
                 }
 
@@ -220,7 +134,7 @@ fun FilterRegisterDialog(
 @Composable
 fun FilterRegisterDialogPreview() {
     MaterialTheme {
-        Surface {
+        Surface(Modifier.fillMaxSize()) {
             FilterRegisterDialog(
                 show = true,
                 selectedSortBy = RegisterOrder.Date(OrderType.ASCENDING),
